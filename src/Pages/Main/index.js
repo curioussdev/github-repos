@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { FaGithub, FaPlus } from 'react-icons/fa'
+import { FaGithub, FaSearch, FaSpinner } from 'react-icons/fa'
 import { Container, Form, SubmitButton } from "./styles";
 
 import api from "../../services/api";
@@ -23,12 +23,12 @@ export default function Main() {
                 }
                 setRepositorios([...repositorios, data]);
                 setNewRepo('');
-            }catch(error){
+            } catch (error) {
                 console.log(error);
-            }finally{
+            } finally {
                 setLoading(false)
             }
-            }
+        }
 
 
         submit();
@@ -57,7 +57,14 @@ export default function Main() {
                     />
 
                     <SubmitButton loading={loading ? 1 : 0}>
-                        <FaPlus size={15} color="#FFF" />
+                        {loading ? (
+                            <FaSpinner size={15} color="#FFF" />
+                        ) : (
+                            <FaSearch size={15} color="#FFF" />
+                        )
+                        }
+
+                        
                     </SubmitButton>
 
                 </Form>

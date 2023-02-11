@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes, css} from "styled-components";
 
 export const Container = styled.div `
    max-width: 700px;
@@ -33,9 +33,10 @@ export const Form = styled.form `
    }
 `;
 
-export const SubmitButton = styled.div.attrs({
-   type: 'submit'
-}) `
+export const SubmitButton = styled.div.attrs( props => ({
+   type: 'submit',
+   disabled: props.loading,
+})) `
     background: #4361ee;
     border:0;
     border-radius: 5px;
@@ -44,4 +45,9 @@ export const SubmitButton = styled.div.attrs({
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &[disabled]{
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
 `;
