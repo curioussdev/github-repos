@@ -33,6 +33,19 @@ export const Form = styled.form `
    }
 `;
 
+//button search animation
+
+const animate = keyframes`
+from{
+   transform: rotate(0deg)
+}
+to{
+   transform: rotate(360deg)
+}
+
+`;
+
+
 export const SubmitButton = styled.div.attrs( props => ({
    type: 'submit',
    disabled: props.loading,
@@ -45,9 +58,19 @@ export const SubmitButton = styled.div.attrs( props => ({
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     &[disabled]{
       cursor: not-allowed;
       opacity: 0.5;
     }
+
+    ${props => props.loading &&
+      css`
+         svg{
+            animation: ${animate} 4s linear infinite;
+         }
+      `
+
+   }
 `;
