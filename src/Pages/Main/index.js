@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
-import { FaGithub, FaSearch, FaSpinner, FaBars } from 'react-icons/fa'
+import { FaGithub, FaSearch, FaSpinner, FaBars, FaTrash} from 'react-icons/fa'
 import { Container, Form, SubmitButton } from "./styles";
 import { List } from "../../components/List";
-
+import { DeleteButton } from "../../components/DeleteButton";
 import api from "../../services/api";
 
 
@@ -35,9 +35,15 @@ export default function Main() {
         submit();
     }, [newRepo, repositorios])
 
-    function handleInputChange() {
-
+    function handleInputChange(e) {
+        setNewRepo(e.target.value);
     }
+
+    const handleDelete = useCallback((repo)=> {
+        const find = repositorios.filter(r => r.name !== repo);
+        setRepositorios(find);
+    }, [repositorios]);
+    
 
 
 
@@ -52,9 +58,9 @@ export default function Main() {
                 <Form onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        placeholder="pesquise por um repositório"
+                        placeholder="digite um repositório/projecto"
                         value={newRepo}
-                        onChange={(e) => { setNewRepo(e.target.value) }}
+                        onChange={handleInputChange}
                     />
 
                     <SubmitButton loading={loading ? 1 : 0}>
@@ -65,7 +71,6 @@ export default function Main() {
                         )
                         }
 
-                        
                     </SubmitButton>
 
                 </Form>
@@ -73,13 +78,16 @@ export default function Main() {
                 <List>
                     {repositorios.map(repo => (
                         <li key={repo.id}>
+                            <DeleteButton onClick={()=>handleDelete(repo.name)}>
+                                <FaTrash color="#e63946" size={20} /> 
+                            </DeleteButton>
                             <span>{repo.name}</span>
-                                <a href="">
-                                    <FaBars size={25} />
-                                </a>   
+                            <a href="">
+                                <FaBars size={20} />
+                            </a>
                         </li>
-                    ) )}
-                </List>  
+                    ))}
+                </List>
 
 
             </Container>

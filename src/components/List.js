@@ -16,6 +16,11 @@ export const List = styled.ul`
         }
     }
 
+    a{
+        color: #4361ee;
+        text-decoration: none; 
+    }
+
     svg{
         color: #4361ee;
     }
