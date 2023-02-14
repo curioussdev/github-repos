@@ -10,14 +10,27 @@ export default function Main() {
     const [newRepo, setNewRepo] = useState('');
     const [repositorios, setRepositorios] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState(null);
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
 
         async function submit() {
             setLoading(true)
+            setAlert(null);
             try {
+
+                if(newRepo == ''){
+                    throw new Error('Você precisa indicar um repositório');
+                }
                 const response = await api.get(`repos/${newRepo}`);
+
+                const hasRepo = repositorios.find(repo => repo.name === newRepo);
+
+                if(hasRepo){
+                    throw new Error('Repositório duplicado');
+                }
+
                 const data = {
                     name: response.data.full_name,
 
@@ -25,6 +38,7 @@ export default function Main() {
                 setRepositorios([...repositorios, data]);
                 setNewRepo('');
             } catch (error) {
+                setAlert(true)
                 console.log(error);
             } finally {
                 setLoading(false)
