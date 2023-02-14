@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { FaGithub, FaSearch, FaSpinner, FaBars, FaTrash} from 'react-icons/fa'
 import { Container, Form, SubmitButton } from "./styles";
 import { List } from "../../components/List";
@@ -11,6 +11,23 @@ export default function Main() {
     const [repositorios, setRepositorios] = useState([]);
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState(null);
+
+
+    //DidMount || Buscar
+    useEffect(() => {
+        const repoStorage = localStorage.getItem('repos');
+
+        if(repoStorage){
+            setRepositorios(JSON.parse(repoStorage))
+        }
+    }, []);
+
+
+
+    // DidUpdate || Salvar Alterações
+    useEffect(() => {
+        localStorage.setItem('repos', JSON.stringify(repositorios));
+    }, [repositorios]);
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
@@ -51,6 +68,7 @@ export default function Main() {
 
     function handleInputChange(e) {
         setNewRepo(e.target.value);
+        setAlert(null);
     }
 
     const handleDelete = useCallback((repo)=> {
@@ -69,7 +87,7 @@ export default function Main() {
                     Repositórios
                 </h1>
 
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} error={alert}>
                     <input
                         type="text"
                         placeholder="digite um repositório/projecto"

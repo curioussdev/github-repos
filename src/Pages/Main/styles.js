@@ -19,7 +19,7 @@ export const Container = styled.div `
    }
 `;
 
-export const Form = styled.form `
+export const Form = styled.form`
    margin-top: 30px;
    display: flex;
    flex-direction: row;
