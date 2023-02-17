@@ -38,7 +38,7 @@ export default function Main() {
             setAlert(null);
             try {
 
-                if(newRepo == ''){
+                if(newRepo === ''){
                     throw new Error('Você precisa indicar um repositório');
                 }
                 const response = await api.get(`repos/${newRepo}`);
