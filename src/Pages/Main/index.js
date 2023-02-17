@@ -4,6 +4,7 @@ import { Container, Form, SubmitButton } from "./styles";
 import { List } from "../../components/List";
 import { DeleteButton } from "../../components/DeleteButton";
 import api from "../../services/api";
+import { Link } from "react-router-dom";
 
 
 export default function Main() {
@@ -114,9 +115,9 @@ export default function Main() {
                                 <FaTrash color="#e63946" size={20} /> 
                             </DeleteButton>
                             <span>{repo.name}</span>
-                            <a href="">
+                            <Link to={`/repositorio/${encodeURIComponent(repo.name)}`}>
                                 <FaBars size={20} />
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </List>
